@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic QR Code Generator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        .qr-container {
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+
+        .qr-container h2 {
+            font-size: 18px;
+            color: #003366;
+            margin-bottom: 15px;
+        }
+
+        #qr-code {
+            border: 2px solid #003366;
+            border-radius: 5px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</head>
+<body>
+    <!-- QR Code Section -->
+    <div class="qr-container">
+        <h2>Scan to Visit the Next Page</h2>
+        <canvas id="qr-code"></canvas>
+    </div>
+
+    <script>
+        // Define the target URL (link to the third page)
+        const targetUrl = "form.html"; // Update this to your actual page URL if necessary
+
+        // Get the canvas element for the QR code
+        const qrCanvas = document.getElementById('qr-code');
+
+        // Function to generate a QR code
+        function generateQRCode() {
+            // Encode the target URL in the QR code
+            QRCode.toCanvas(
+                qrCanvas, 
+                targetUrl, // Set the target as a simple URL
+                { width: 150 }, // Set width for the QR code
+                function (error) {
+                    if (error) console.error("QR Code Error:", error);
+                }
+            );
+        }
+
+        // Call the function to generate the QR code
+        generateQRCode();
+    </script>
+</body>
+</html>
