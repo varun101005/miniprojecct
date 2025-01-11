@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,24 +15,30 @@
             background-color: #f0f8ff;
             margin: 0;
         }
+
         form {
             background: white;
             padding: 25px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 350px; /* Larger form width */
+            width: 350px;
         }
-        input, select, button {
+
+        input,
+        select,
+        button {
             margin: 12px 0;
-            padding: 12px; /* Larger padding for better usability */
-            font-size: 14px; /* Slightly larger text */
+            padding: 12px;
+            font-size: 14px;
             width: 100%;
         }
+
         label {
-            font-size: 14px; /* Slightly larger label text */
+            font-size: 14px;
             display: block;
-            margin-bottom: 6px; /* Adjust spacing between label and input */
+            margin-bottom: 6px;
         }
+
         button {
             background-color: #007bff;
             color: white;
@@ -40,13 +47,24 @@
             cursor: pointer;
             padding: 12px;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
+        .reset {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 12px;
+        }
     </style>
 </head>
+
 <body>
-    <form action="submit.php" method="post">
+    <form name="google-sheet">
         <label for="student-id">Student ID:</label>
         <input type="text" id="student-id" name="student_id" required>
 
@@ -55,7 +73,6 @@
 
         <label for="section">Section:</label>
         <select id="section" name="section" required>
-            <!-- Dropdown menu for sections (A1 to Z2) -->
             <option value="" disabled selected>Select your section</option>
             <script>
                 const select = document.getElementById("section");
@@ -79,7 +96,25 @@
             <option value="Other">Other</option>
         </select>
 
-        <button type="submit">Submit</button>
+        <label><b>Attendance:</b></label><br>
+        Present<input type="radio" name="attendance" value="Present" required>
+        Absent<input type="radio" name="attendance" value="Absent" required><br>
+
+        <button type="submit"class="submit">Submit</button>
+        <button type="reset" class="reset">Reset</button>
     </form>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbylfrY6mHykTTATSCZcgnuY84eqM9Cd4xar0f8928hHycjb44hZqMPdrEdTGxStnk2RQg/exec';
+        const form = document.forms['google-sheet'];
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => alert("Thanks for contacting us! We will get back to you soon."))
+                .catch(error => console.error('Error!', error.message));
+        });
+    </script>
 </body>
+
 </html>
